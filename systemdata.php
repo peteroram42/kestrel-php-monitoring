@@ -1,5 +1,4 @@
 <?php
-
 class SystemData {
     var $os;            // e.g. "Darwin"
     var $mem_used;      // e.g. 2.104G
@@ -48,5 +47,4 @@ class SystemData {
         $this->disks = getSysDiskData($this->os);
     }
 }
-
 ?>
