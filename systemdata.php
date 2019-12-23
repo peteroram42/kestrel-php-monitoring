@@ -1,4 +1,7 @@
 <?php
+
+namespace oram\kestrel;
+
 class SystemData {
     var $os;            // e.g. "Darwin"
     var $mem_used;      // e.g. 2.104G
@@ -33,7 +36,7 @@ class SystemData {
     }
 
     private function getLoad() {
-        $this->sys_load = getSysLoad();
+        $this->sys_load = getSysLoad($this->os);
     }
 
     private function getCPUData() {

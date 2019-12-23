@@ -3,7 +3,9 @@
 require_once("systemdata.php");
 require_once("kestrel-funcs.php");
 
-$sd = new SystemData;
+use oram\kestrel\SystemData as SysData;
+
+$sd = new SysData;
 
 // can use $sd->update() whenever needed to refresh data
 // $sd->update();

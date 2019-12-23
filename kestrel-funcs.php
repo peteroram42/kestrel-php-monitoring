@@ -1,5 +1,7 @@
 <?php
 
+namespace oram\kestrel;
+
 // helper function to format bytes values
 function bytesFormat($bytes) {
     $bytes = (float)$bytes;
@@ -105,23 +107,22 @@ function getSysDiskData($os) {
             $dd['total'] = bytesFormat($dd['total']);
         }
         return $diskData;
-    } else if ($os == "WINNT" || $os == "WIN32" || $os == "Windows") { // Tested and works
+    } else if ($os == "WINNT" || $os == "WIN32" || $os == "Windows") {
         $diskData = array();
-        $rows = explode("\n", shell_exec("wmic logicaldisk get Caption,FreeSpace,Size")
+        $rows = explode("\n", shell_exec("wmic logicaldisk get Caption,FreeSpace,Size"));
         for($x=1;$x<count($rows);$x++) {
-            $data = explode("_",preg_replace('/[ ]+/','_',$rows[$x]));
-            $data[0] = preg_replace('/:/','',$data[0]);
-            if (!isset($diskData[$data[0]])) { $diskData[$data[0]] = array(); }
-            $diskData[$thisDisk[0]]['used'] += ((int)$data[2] - ((int)$data[1]);
-            $diskData[$thisDisk[0]]['avail'] += ((int)$data[1]);
-            $diskData[$thisDisk[0]]['total'] += ((int)$data[2]);
+            $data = explode("_", preg_replace('/[ ]+/', '_', $rows[$x]));
+            $data[0] = preg_replace('/:/', '', $data[0]);
+            if (!isset($diskData[$thisDisk[0]])) { $diskData[$data[0]] = array(); }
+            $diskData[$thisDisk[0]]['used'] += ((int)$data[2] = (int)$data[1]);
+            $diskData[$thisDisk[0]]['avail'] += (int)$data[1];
+            $diskData[$thisDisk[0]]['total'] += (int)$data[2];
         }
-        foreach ($diskData as &$dd) {
+        foreach($diskData as &$dd) {
             $dd['used'] = bytesFormat($dd['used']);
             $dd['avail'] = bytesFormat($dd['avail']);
             $dd['total'] = bytesFormat($dd['total']);
         }
-        return $diskData;
     }
 }
 ?>
